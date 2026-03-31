@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+  modules: ["@nuxtjs/sanity"],
+  sanity: {
+    projectId: "sos3tlxk",
+    dataset: "production",
+    useCdn: true,
+    apiVersion: "2026-03-31",
+  },
   css: ["~/assets/css/main.css"],
   app: {
     head: {

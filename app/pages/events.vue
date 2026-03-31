@@ -1,9 +1,14 @@
 <script setup lang="ts">
-const events = [
-  { id: 1, title: 'Muharrem Vasten - Breken van het Vasten', date: '2024-07-16', time: '19:00', location: 'Cemhuis Zaanstad', description: 'Gezamenlijk breken van het vasten met een speciale maaltijd en gebed in de traditie van de 12 Imams.' },
-  { id: 2, title: 'Asure Dag', date: '2024-07-18', time: '14:00', location: 'Cemhuis Zaanstad', description: 'Viering van de Asure-dag. We delen traditionele Asure-soep uit aan leden en de buurt.' },
-  { id: 3, title: 'Cem Dienst', date: '2024-08-01', time: '19:30', location: 'Cemhuis Zaanstad', description: 'Reguliere Cem-ceremonie (gebedsdienst) onder leiding van de Dede. Iedereen is welkom.' },
-]
+const query = groq`*[_type == "event"] | order(date asc) {
+  _id,
+  title,
+  date,
+  time,
+  location,
+  description
+}`;
+const { data: rawData } = await useSanityQuery(query);
+const events = computed(() => rawData.value?.data || rawData.value || []);
 </script>
 
 <template>
@@ -16,10 +21,16 @@ const events = [
         </div>
 
         <div class="event-list">
-          <div v-for="event in events" :key="event.id" class="event-card glass-panel animate-fade-in">
+          <div
+            v-for="event in events"
+            :key="event._id"
+            class="event-card glass-panel animate-fade-in"
+          >
             <div class="event-date">
               <span class="day">{{ new Date(event.date).getDate() }}</span>
-              <span class="month">{{ new Date(event.date).toLocaleString('nl-NL', { month: 'short' }) }}</span>
+              <span class="month">{{
+                new Date(event.date).toLocaleString("nl-NL", { month: "short" })
+              }}</span>
             </div>
             <div class="event-details">
               <h2>{{ event.title }}</h2>

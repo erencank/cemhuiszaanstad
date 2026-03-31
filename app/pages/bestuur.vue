@@ -1,36 +1,12 @@
 <script setup lang="ts">
-const boardMembers = [
-  {
-    id: 1,
-    name: "Voorbeeld Naam 1",
-    role: "Voorzitter",
-    image: "https://via.placeholder.com/300?text=Foto",
-  },
-  {
-    id: 2,
-    name: "Voorbeeld Naam 2",
-    role: "Secretaris",
-    image: "https://via.placeholder.com/300?text=Foto",
-  },
-  {
-    id: 3,
-    name: "Voorbeeld Naam 3",
-    role: "Penningmeester",
-    image: "https://via.placeholder.com/300?text=Foto",
-  },
-  {
-    id: 4,
-    name: "Voorbeeld Naam 4",
-    role: "Bestuurslid",
-    image: "https://via.placeholder.com/300?text=Foto",
-  },
-  {
-    id: 5,
-    name: "Voorbeeld Naam 5",
-    role: "Bestuurslid",
-    image: "https://via.placeholder.com/300?text=Foto",
-  },
-];
+const query = groq`*[_type == "boardMember"] | order(order asc) {
+  _id,
+  name,
+  role,
+  "image": image.asset->url
+}`;
+const { data: rawData } = await useSanityQuery(query);
+const boardMembers = computed(() => rawData.value?.data || rawData.value || []);
 </script>
 
 <template>
@@ -48,7 +24,7 @@ const boardMembers = [
         <div class="grid">
           <div
             v-for="member in boardMembers"
-            :key="member.id"
+            :key="member._id"
             class="card glass-panel animate-fade-in"
           >
             <div class="card-img-wrapper">

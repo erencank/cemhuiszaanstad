@@ -1,9 +1,18 @@
 <script setup lang="ts">
-const reports = [
-  { year: 2023, title: 'Jaarverslag & Financiële Verantwoording 2023', size: '2.4 MB' },
-  { year: 2022, title: 'Jaarverslag & Financiële Verantwoording 2022', size: '1.8 MB' },
-  { year: 2021, title: 'Jaarverslag & Financiële Verantwoording 2021', size: '2.1 MB' },
-]
+const query = groq`*[_type == "report"] | order(year desc) {
+  _id,
+  title,
+  year,
+  "fileUrl": file.asset->url,
+  "size": file.asset->size
+}`;
+const { data: rawData } = await useSanityQuery(query);
+const reports = computed(() => rawData.value?.data || rawData.value || []);
+
+const formatSize = (bytes: number | undefined) => {
+  if (!bytes) return "Onbekend";
+  return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+};
 </script>
 
 <template>
@@ -12,14 +21,33 @@ const reports = [
       <div class="container">
         <div class="page-header">
           <h1>Jaarverslagen</h1>
-          <p>Transparantie is belangrijk voor ons. Hier kunt u onze officiële jaarverslagen en financiële stukken inzien.</p>
+          <p>
+            Transparantie is belangrijk voor ons. Hier kunt u onze officiële
+            jaarverslagen en financiële stukken inzien.
+          </p>
         </div>
 
         <div class="documents-list">
-          <div v-for="report in reports" :key="report.year" class="doc-card glass-panel animate-fade-in">
+          <div
+            v-for="report in reports"
+            :key="report._id"
+            class="doc-card glass-panel animate-fade-in"
+          >
             <div class="doc-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                ></path>
                 <polyline points="14 2 14 8 20 8"></polyline>
                 <line x1="16" y1="13" x2="8" y2="13"></line>
                 <line x1="16" y1="17" x2="8" y2="17"></line>
@@ -28,9 +56,19 @@ const reports = [
             </div>
             <div class="doc-info">
               <h3>{{ report.title }}</h3>
-              <p>Geüpload: {{ report.year }} • PDF ({{ report.size }})</p>
+              <p>
+                Geüpload: {{ report.year }} • PDF ({{
+                  formatSize(report.size)
+                }})
+              </p>
             </div>
-            <a href="#" class="btn btn-secondary doc-dl">Download</a>
+            <a
+              :href="report.fileUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-secondary doc-dl"
+              >Download</a
+            >
           </div>
         </div>
       </div>
