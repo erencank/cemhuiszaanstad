@@ -2,7 +2,11 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <img src="/logo.png" alt="Logo Cemhuis Zaanstad" class="footer-logo-img" />
+        <img
+          src="/logo.png"
+          alt="Logo Cemhuis Zaanstad"
+          class="footer-logo-img"
+        />
         <div>
           <h3 class="footer-title">Cemhuis Zaanstad</h3>
           <p class="footer-desc">Alevitische Culturele Verenigingen</p>
@@ -21,7 +25,7 @@
           <a href="mailto:cemhuiszaanstad.acv@gmail.com" class="footer-link"
             >cemhuiszaanstad.acv@gmail.com</a
           >
-          <p class="kvk">KvK 40062652</p>
+          <p class="kvk">KvK 40618082</p>
         </div>
 
         <div class="footer-col">

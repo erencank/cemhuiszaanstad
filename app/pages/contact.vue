@@ -29,7 +29,7 @@
 
             <div class="info-item">
               <strong>KvK-nummer:</strong>
-              <p>40062652</p>
+              <p>40618082</p>
             </div>
           </div>
 
