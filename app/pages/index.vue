@@ -1,7 +1,7 @@
 <template>
   <div class="page-home">
     <section class="hero section">
-      <div class="container hero-inner">
+      <div class="container hero-inner glass-panel">
         <h1 class="hero-title animate-fade-in">
           Welkom bij het Alevitisch Culturele Vereniging Zaanstad
         </h1>
@@ -24,17 +24,17 @@
   min-height: 60vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(
-    to bottom,
-    var(--c-sand-primary-light),
-    var(--c-bg-body)
-  );
+  background-image: url('/main_cover.png');
+  background-size: cover;
+  background-position: center;
+  padding: var(--spacing-xl) 0;
 }
 
 .hero-inner {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-md);
 }
 
 .hero-title {
