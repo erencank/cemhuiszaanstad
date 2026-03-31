@@ -1,27 +1,41 @@
+<script setup lang="ts">
+const query = groq`*[_type == "policyPlan"] | order(startYear desc) {
+  _id,
+  title,
+  startYear,
+  endYear,
+  description,
+  "fileUrl": file.asset->url
+}`;
+const { data: rawData } = await useSanityQuery(query);
+const policyPlans = computed(() => rawData.value?.data || rawData.value || []);
+</script>
+
 <template>
   <div class="page-beleidsplan">
     <section class="section">
       <div class="container layout-content">
-        <article class="prose glass-panel animate-fade-in">
-          <h1>Beleidsplan 2024 - 2028</h1>
-          <p class="lead">In dit beleidsplan beschrijven wij onze visie, missie en belangrijkste doelen voor de komende jaren.</p>
-          
-          <h2>Inleiding</h2>
-          <p>De Alevitische levensovertuiging is voor ons een rijke bron van cultuur, spiritualiteit en menselijkheid. Ze draait om waarden als gelijkheid, rechtvaardigheid, respect en verbondenheid.</p>
-          
-          <h2>Visie & Missie</h2>
-          <p>Onze missie is om de Alevitische cultuur en levensvisie levend te houden en te delen met anderen. Wij verbinden mensen door middel van educatieve en culturele activiteiten.</p>
-          
-          <h2>Kernactiviteiten</h2>
-          <ul>
-            <li>Organiseren van traditionele religieuze diensten (Cem).</li>
-            <li>Samenbrengen van jongeren door middel van muziek (Bağlama) en folklore.</li>
-            <li>Maatschappelijke oriëntatie en ondersteuning bieden aan de gemeenschap.</li>
-          </ul>
+        <article
+          v-for="plan in policyPlans"
+          :key="plan._id"
+          class="prose glass-panel animate-fade-in"
+          style="margin-bottom: var(--spacing-xl)"
+        >
+          <h1>{{ plan.title }} {{ plan.startYear }} - {{ plan.endYear }}</h1>
+          <!-- Uses SanityContent component to render the rich Portable Text array -->
+          <div class="portable-content" v-if="plan.description">
+            <SanityContent :value="plan.description" />
+          </div>
 
-          <div class="action-box">
+          <div class="action-box" v-if="plan.fileUrl">
             <p>Wilt u het volledige beleidsplan lezen?</p>
-            <a href="#" class="btn btn-primary">Download Beleidsplan (PDF)</a>
+            <a
+              :href="plan.fileUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary"
+              >Download {{ plan.title }} (PDF)</a
+            >
           </div>
         </article>
       </div>
@@ -43,28 +57,40 @@
   margin-bottom: var(--spacing-sm);
 }
 
-.prose .lead {
+.prose :deep(.lead) {
   font-size: 1.2rem;
   color: var(--c-sand-primary-dark);
   margin-bottom: var(--spacing-lg);
   font-weight: 500;
 }
 
-.prose h2 {
+.prose :deep(h2) {
   font-size: 1.75rem;
   margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-sm);
   color: var(--c-charcoal-dark);
 }
 
-.prose ul {
+.prose :deep(p) {
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.prose :deep(ul) {
   list-style: disc;
   padding-left: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
   color: var(--c-text-muted);
 }
 
-.prose li {
+.prose :deep(ol) {
+  list-style: decimal;
+  padding-left: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  color: var(--c-text-muted);
+}
+
+.prose :deep(li) {
   margin-bottom: var(--spacing-xs);
 }
 
