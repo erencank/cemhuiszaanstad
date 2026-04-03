@@ -38,7 +38,7 @@
             style="animation-delay: 0.1s"
           >
             <iframe
-              src="https://www.google.com/maps?q=Ds.+Martin+Luther+Kingweg+155,+1503+KW+Zaandam&output=embed"
+              src="https://www.google.com/maps?q=CEMHUIS+ZAANSTAD&output=embed"
               width="100%"
               height="100%"
               style="border: 0"
