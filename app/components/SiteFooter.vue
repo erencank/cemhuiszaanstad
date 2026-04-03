@@ -32,7 +32,7 @@
           <h4 class="col-title">Socials</h4>
           <div class="social-links">
             <a
-              href="https://www.facebook.com"
+              href="https://www.facebook.com/cemhuis.zaanstad/"
               target="_blank"
               rel="noopener noreferrer"
               class="social-btn"
