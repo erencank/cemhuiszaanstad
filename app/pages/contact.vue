@@ -9,7 +9,7 @@
           </p>
         </div>
 
-        <div class="contact-grid">
+        <div class="contact-card-wrapper">
           <div class="contact-info glass-panel animate-fade-in">
             <h2>Contactgegevens</h2>
 
@@ -32,58 +32,11 @@
               <p>40618082</p>
             </div>
           </div>
-
-          <div
-            class="contact-form glass-panel animate-fade-in"
-            style="animation-delay: 0.1s"
-          >
-            <h2>Stuur ons een bericht</h2>
-            <form @submit.prevent="submitForm">
-              <div class="form-group">
-                <label for="name">Naam</label>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Uw volledige naam"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="email">E-mailadres</label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="uw.naam@voorbeeld.nl"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="message">Bericht</label>
-                <textarea
-                  id="message"
-                  rows="5"
-                  placeholder="Typ hier uw bericht..."
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">
-                Verstuur Bericht
-              </button>
-            </form>
-          </div>
         </div>
       </div>
     </section>
   </div>
 </template>
-
-<script setup lang="ts">
-const submitForm = () => {
-  alert(
-    "Dankuwel voor uw bericht! We nemen zo spoedig mogelijk contact met u op.",
-  );
-};
-</script>
 
 <style scoped>
 .page-header {
@@ -91,79 +44,51 @@ const submitForm = () => {
   margin-bottom: var(--spacing-xl);
 }
 
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-lg);
-  max-width: 1000px;
+.contact-card-wrapper {
+  max-width: 500px;
   margin: 0 auto;
 }
 
-@media (min-width: 768px) {
-  .contact-grid {
-    grid-template-columns: 1fr 1.5fr;
-  }
-}
-
-.contact-info,
-.contact-form {
+.contact-info {
   padding: var(--spacing-xl);
+  text-align: center;
 }
 
 h2 {
-  font-size: 1.5rem;
-  margin-bottom: var(--spacing-lg);
+  font-size: 1.7rem;
+  margin-bottom: var(--spacing-xl);
+  color: var(--c-charcoal-dark);
 }
 
 .info-item {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
 }
 
 .info-item strong {
   display: block;
-  color: var(--c-charcoal-dark);
-  margin-bottom: 4px;
+  color: var(--c-sand-primary-dark);
+  margin-bottom: 8px;
+  font-size: 1.1rem;
 }
 
 .info-item p,
 .info-item a {
-  color: var(--c-text-muted);
+  color: var(--c-charcoal);
+  font-size: 1.1rem;
+  line-height: 1.5;
 }
 
-.info-item a:hover {
-  color: var(--c-sand-primary-dark);
-}
-
-.form-group {
-  margin-bottom: var(--spacing-md);
-}
-
-label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: var(--c-charcoal-dark);
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: var(--radius-sm);
-  background: var(--c-white);
+.info-item a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
   transition: var(--transition);
 }
 
-input:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--c-sand-primary-dark);
-  box-shadow: 0 0 0 3px rgba(169, 150, 119, 0.2);
-}
-
-button[type="submit"] {
-  width: 100%;
-  margin-top: var(--spacing-sm);
+.info-item a:hover {
+  text-decoration-color: var(--c-sand-primary-dark);
 }
 </style>
