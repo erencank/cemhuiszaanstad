@@ -10,7 +10,11 @@ export default defineNuxtConfig({
     apiVersion: "2026-03-31",
   },
   css: ["~/assets/css/main.css"],
+  nitro: {
+    preset: 'github-pages'
+  },
   app: {
+    baseURL: process.env.GITHUB_ACTIONS === 'true' ? '/cemhuiszaanstad/' : '/',
     head: {
       title: "Alevitisch Culturele Vereniging Zaanstad",
       meta: [

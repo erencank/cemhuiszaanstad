@@ -3,7 +3,7 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <img
-          src="/logo.png"
+          src="~/assets/images/logo.png"
           alt="Logo Cemhuis Zaanstad"
           class="footer-logo-img"
         />

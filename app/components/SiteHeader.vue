@@ -1,36 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const isMenuOpen = ref(false)
+const isMenuOpen = ref(false);
 
 const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
-}
+  isMenuOpen.value = !isMenuOpen.value;
+};
 
 const navLinks = [
-  { name: 'Over ons', path: '/' },
-  { name: 'Bestuur', path: '/bestuur' },
-  { name: 'Events', path: '/events' },
-  { name: 'Beleidsplan', path: '/beleidsplan' },
-  { name: 'Jaarverslagen', path: '/jaarverslagen' },
-  { name: 'Contact', path: '/contact' }
-]
+  { name: "Over ons", path: "/" },
+  { name: "Bestuur", path: "/bestuur" },
+  { name: "Events", path: "/events" },
+  { name: "Beleidsplan", path: "/beleidsplan" },
+  { name: "Jaarverslagen", path: "/jaarverslagen" },
+  { name: "Contact", path: "/contact" },
+];
 </script>
 
 <template>
   <header class="header" :class="{ 'header-scrolled': true }">
     <div class="container header-inner">
       <NuxtLink to="/" class="logo">
-        <img src="/logo.png" alt="Logo Cemhuis Zaanstad" class="logo-img" />
+        <img
+          src="~/assets/images/logo.png"
+          alt="Logo Cemhuis Zaanstad"
+          class="logo-img"
+        />
         <span class="logo-text">CEMHUIS ZAANSTAD</span>
       </NuxtLink>
 
       <!-- Desktop Nav -->
       <nav class="desktop-nav">
         <!-- We use NuxtLink for internal navigation -->
-        <NuxtLink 
-          v-for="link in navLinks" 
-          :key="link.path" 
+        <NuxtLink
+          v-for="link in navLinks"
+          :key="link.path"
           :to="link.path"
           class="nav-link"
           active-class="nav-link-active"
@@ -50,9 +54,9 @@ const navLinks = [
     <!-- Mobile Nav -->
     <div class="mobile-nav" :class="{ 'mobile-nav-open': isMenuOpen }">
       <nav class="mobile-nav-links">
-        <NuxtLink 
-          v-for="link in navLinks" 
-          :key="link.path" 
+        <NuxtLink
+          v-for="link in navLinks"
+          :key="link.path"
           :to="link.path"
           class="mobile-nav-link"
           active-class="mobile-nav-link-active"
@@ -131,7 +135,7 @@ const navLinks = [
 }
 
 .nav-link-active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 0;
@@ -169,9 +173,16 @@ const navLinks = [
   transform-origin: 1px;
 }
 
-.bar-top-open { transform: rotate(45deg); }
-.bar-mid-open { opacity: 0; transform: translateX(20px); }
-.bar-bot-open { transform: rotate(-45deg); }
+.bar-top-open {
+  transform: rotate(45deg);
+}
+.bar-mid-open {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.bar-bot-open {
+  transform: rotate(-45deg);
+}
 
 /* Mobile Navigation */
 .mobile-nav {
@@ -189,7 +200,7 @@ const navLinks = [
 
 .mobile-nav-open {
   max-height: 400px;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .mobile-nav-links {
@@ -204,7 +215,7 @@ const navLinks = [
   font-weight: 500;
   color: var(--c-charcoal-dark);
   padding: var(--spacing-sm) 0;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .mobile-nav-link-active {
