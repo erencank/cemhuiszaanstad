@@ -9,7 +9,7 @@
           </p>
         </div>
 
-        <div class="contact-card-wrapper">
+        <div class="contact-grid">
           <div class="contact-info glass-panel animate-fade-in">
             <h2>Contactgegevens</h2>
 
@@ -32,6 +32,21 @@
               <p>40618082</p>
             </div>
           </div>
+
+          <div
+            class="map-container glass-panel animate-fade-in"
+            style="animation-delay: 0.1s"
+          >
+            <iframe
+              src="https://www.google.com/maps?q=Ds.+Martin+Luther+Kingweg+155,+1503+KW+Zaandam&output=embed"
+              width="100%"
+              height="100%"
+              style="border: 0"
+              allowfullscreen="false"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
       </div>
     </section>
@@ -44,14 +59,23 @@
   margin-bottom: var(--spacing-xl);
 }
 
-.contact-card-wrapper {
-  max-width: 500px;
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+  max-width: 1000px;
   margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1.5fr;
+  }
 }
 
 .contact-info {
   padding: var(--spacing-xl);
-  text-align: center;
+  /* Optional: removed text-align: center if it looks better left-aligned next to map */
 }
 
 h2 {
@@ -90,5 +114,19 @@ h2 {
 
 .info-item a:hover {
   text-decoration-color: var(--c-sand-primary-dark);
+}
+
+.map-container {
+  padding: 12px;
+  min-height: 350px;
+  display: flex;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+  border-radius: var(--radius-sm);
+  background: var(--c-sand-primary-light);
 }
 </style>
