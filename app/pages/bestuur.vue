@@ -1,12 +1,19 @@
 <script setup lang="ts">
-const query = groq`*[_type == "boardMember"] | order(order asc) {
+const query = groq`*[_type == "committee"] | order(order asc) {
   _id,
-  name,
-  role,
-  "image": image.asset->url
+  title,
+  description,
+  members[]{
+    role,
+    "person": person->{
+      _id,
+      name,
+      "image": image.asset->url
+    }
+  }
 }`;
 const { data: rawData } = await useSanityQuery(query);
-const boardMembers = computed(() => rawData.value?.data || rawData.value || []);
+const committees = computed(() => rawData.value?.data || rawData.value || []);
 </script>
 
 <template>
@@ -14,25 +21,47 @@ const boardMembers = computed(() => rawData.value?.data || rawData.value || []);
     <section class="section">
       <div class="container">
         <div class="page-header">
-          <h1>Ons Bestuur</h1>
+          <h1>Onze Organisatie</h1>
           <p>
-            Maak kennis met het team achter het Alevitisch Culturele Vereniging
-            Zaanstad.
+            Maak kennis met de verschillende organen en commissies binnen het
+            Alevitisch Culturele Vereniging Zaanstad.
           </p>
         </div>
 
-        <div class="grid">
-          <div
-            v-for="member in boardMembers"
-            :key="member._id"
-            class="card glass-panel animate-fade-in"
-          >
-            <div class="card-img-wrapper">
-              <img :src="member.image" :alt="member.name" class="card-img" />
+        <div
+          v-for="committee in committees"
+          :key="committee._id"
+          class="committee-section animate-fade-in"
+        >
+          <div class="committee-header">
+            <h2>{{ committee.title }}</h2>
+            <div
+              v-if="committee.description"
+              class="committee-desc portable-content"
+            >
+              <SanityContent :value="committee.description" />
             </div>
-            <div class="card-content">
-              <h3>{{ member.name }}</h3>
-              <p class="role">{{ member.role }}</p>
+          </div>
+
+          <div class="grid" v-if="committee.members">
+            <div
+              v-for="memberEntry in committee.members"
+              :key="memberEntry.person?._id"
+              class="card glass-panel"
+            >
+              <div class="card-img-wrapper">
+                <img
+                  v-if="memberEntry.person?.image"
+                  :src="memberEntry.person.image"
+                  :alt="memberEntry.person?.name"
+                  class="card-img"
+                />
+                <div v-else class="card-img-placeholder"></div>
+              </div>
+              <div class="card-content">
+                <h3>{{ memberEntry.person?.name || "Onbekend" }}</h3>
+                <p class="role">{{ memberEntry.role }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -47,9 +76,57 @@ const boardMembers = computed(() => rawData.value?.data || rawData.value || []);
   margin-bottom: var(--spacing-xl);
 }
 
+.committee-section {
+  margin-bottom: 4rem;
+}
+
+.committee-header {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.committee-header h2 {
+  font-size: 2rem;
+  color: var(--c-charcoal-dark);
+  margin-bottom: var(--spacing-sm);
+  display: inline-block;
+  position: relative;
+}
+
+.committee-header h2::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 20%;
+  width: 60%;
+  height: 3px;
+  background: var(--c-sand-primary-dark);
+  border-radius: 2px;
+}
+
+.committee-desc {
+  color: var(--c-text-muted);
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: var(--spacing-md);
+}
+
+.portable-content :deep(p) {
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.portable-content :deep(ul) {
+  list-style: disc;
+  padding-left: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  text-align: left;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: var(--spacing-lg);
 }
 
@@ -75,6 +152,13 @@ const boardMembers = computed(() => rawData.value?.data || rawData.value || []);
   height: 100%;
   object-fit: cover;
   transition: var(--transition);
+}
+
+.card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--c-sand-primary);
+  opacity: 0.2;
 }
 
 .card:hover .card-img {
