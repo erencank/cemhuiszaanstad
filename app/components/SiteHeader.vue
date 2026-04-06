@@ -13,6 +13,7 @@ const navLinks = [
   { name: "Events", path: "/events" },
   { name: "Beleidsplan", path: "/beleidsplan" },
   { name: "Jaarverslagen", path: "/jaarverslagen" },
+  { name: "Begrippen", path: "/begrippen" },
   { name: "Contact", path: "/contact" },
 ];
 </script>
