@@ -82,8 +82,14 @@
 .hero-inner {
   text-align: center;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 16px;
   padding: var(--spacing-xl) var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .hero-inner {
+    margin: 0 auto;
+  }
 }
 
 .hero-title {
