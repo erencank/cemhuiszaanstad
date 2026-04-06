@@ -1,7 +1,7 @@
 <template>
   <div class="page-home">
     <section class="hero section">
-      <div class="container hero-inner glass-panel">
+      <div class="container hero-inner">
         <h1 class="hero-title animate-fade-in">
           Welkom bij het Alevitisch Culturele Vereniging Zaanstad
         </h1>
@@ -95,13 +95,16 @@
 .hero-title {
   font-size: 3rem;
   margin-bottom: var(--spacing-md);
-  color: var(--c-charcoal-dark);
+  color: var(--c-white);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6), 0 4px 24px rgba(0, 0, 0, 0.4);
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
-  color: var(--c-text-muted);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #ffffff;
   margin-bottom: var(--spacing-lg);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 4px 20px rgba(0, 0, 0, 0.7);
 }
 
 .hero-actions {
